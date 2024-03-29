@@ -39,7 +39,18 @@ def register_commands(cli):
 
         result = model_obj.prompt(prompt, system=system or SYSTEM_PROMPT)
 
-        interactive_exec(str(result))
+
+def clean_codeblock(text):
+    """
+    Removes enclosing triple-backticks from a multi-line string.
+
+    :param text: The input string.
+    :return: The processed string without enclosing triple-backticks.
+    """
+    lines = text.splitlines()
+    if lines and lines[0].startswith("```") and lines[-1].startswith("```"):
+        lines = lines[1:-1]
+    return "\n".join(lines)
 
 
 def interactive_exec(command):
